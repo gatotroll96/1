@@ -5,17 +5,21 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function getRandomArbitrary(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 var canvas = document.getElementById("myGame");
-//set full screen
-canvas.width  = window.innerWidth;
-canvas.height = window.innerHeight;
+
+
 // var ball
+
 var ctx = canvas.getContext("2d");
 var ballX = getRandom(50, canvas.width - 50);
 var ballY = getRandom(50, canvas.height - 50);
 var ballRadius = 15;
-var dx =  (Math.random()>0.5)? 1 : -1;
-var dy =  (Math.random()>0.5)? 1 : -1;
+var dx =  getRandomArbitrary(-1 , 1);
+var dy =  getRandomArbitrary(-1 , 1);
 
 
 // hanlde speed ball
@@ -73,4 +77,23 @@ function draw(){
     ballY += dy;
     requestAnimationFrame(draw);
 }
-draw();
+
+//set full screen and resize 
+window.addEventListener('resize', resizeCanvas, false);
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+                
+    if(ballX > canvas.width){
+        ballX = canvas.width - ballRadius -5;
+    }
+
+    if(ballY > canvas.height){
+        ballX = canvas.height - ballRadius -5;
+    }
+    draw(); 
+  }
+
+// resize and start draw 
+resizeCanvas();
+        
